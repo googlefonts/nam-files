@@ -63,8 +63,8 @@ def output_chars(todo, filename, args):
         f.write(f"# specified in the original file {filename}.\n\n")
         for codepoint in sorted(codepoints):
             data = youseedee.ucd_data(codepoint)
-            name = data.get("Name")
-            if data.get("General_Category", "Cn") == "Cn":
+            name = data.get("Name", "")
+            if data.get("General_Category") == "Cn" or (not name) and "Age" not in data:
                 continue
             f.write("0x%04X %s\n" % (codepoint, name))
 
