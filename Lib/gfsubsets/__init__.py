@@ -6,6 +6,7 @@ import codecs
 import contextlib
 import re
 import sys
+import warnings
 from importlib import resources
 from fontTools import ttLib
 
@@ -25,6 +26,9 @@ class NamFileDict(dict):
     def read_namfile(self, subset):
         cps = set()
         ref = nam_files.joinpath(subset + "_unique-glyphs.nam")
+        if not ref.is_file():
+            warnings.warn(f"No such subset '{subset}'")
+            return cps
         with ref.open("r", encoding="utf-8") as f:
             for line in f:
                 if line.startswith("#"):
