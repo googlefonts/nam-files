@@ -2,6 +2,9 @@
 requires = ["setuptools >= 61.0", "setuptools-scm>=8.0"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools_scm]
+write_to = "Lib/gfsubsets/_version.py"
+
 [project]
 name = "gfsubsets"
 dynamic = ["version"]
