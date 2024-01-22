@@ -19,6 +19,15 @@ authors = [
     {name = 'Garret Rieger', email = "grieger@google.com" },
     {name = 'Roderick Sheeter', email = "rsheeter@google.com" }
 ]
+dependencies = [
+    "importlib_resources"  # Backport for Python < 3.9
+]
+
+[project.optional-dependencies]
+dev = [
+    "youseedee"
+]
+
 
 [tool.setuptools.package-dir]
 gfsubsets = "Lib/gfsubsets"

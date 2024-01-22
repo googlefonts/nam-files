@@ -7,12 +7,14 @@ import contextlib
 import re
 import sys
 import warnings
-from importlib import resources
+# importlib.resources.files only available since Python>3.9,
+# temporarily use backport
+from importlib_resources import files
 from fontTools import ttLib
 
 from . import subsets
 
-nam_files = resources.files("gfsubsets.data")
+nam_files = files("gfsubsets.data")
 
 
 class NamFileDict(dict):

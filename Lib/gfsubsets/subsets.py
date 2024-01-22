@@ -15,10 +15,12 @@
 # limitations under the License.
 #
 import os
-from importlib import resources
+# importlib.resources.files only available since Python>3.9,
+# temporarily use backport
+from importlib_resources import files
 
 subset_files = [resource.name for resource 
-                in resources.files("gfsubsets.data").iterdir()
+                in files("gfsubsets.data").iterdir()
                 if resource.name.endswith("_unique-glyphs.nam")]
 
 SUBSETS = sorted(
