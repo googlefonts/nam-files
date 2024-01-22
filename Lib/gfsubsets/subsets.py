@@ -15,12 +15,13 @@
 # limitations under the License.
 #
 import os
-import glob
-from pkg_resources import resource_filename
+from importlib import resources
 
-nam_dir = resource_filename("glyphsets", "data")
-subset_files = glob.glob(os.path.join(nam_dir, "*_unique-glyphs.nam"))
+subset_files = [resource.name for resource 
+                in resources.files("gfsubsets.data").iterdir()
+                if resource.name.endswith("_unique-glyphs.nam")]
+
 SUBSETS = sorted(
-    os.path.basename(filename).replace("_unique-glyphs.nam", "")
+    filename.replace("_unique-glyphs.nam", "")
     for filename in subset_files
 )
