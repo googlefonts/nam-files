@@ -231,6 +231,8 @@
 @block(Geometric Shapes Extended)
 @block(Supplemental Arrows-C)
 
+0x1F900..0x1F90B
+
 0x1F93B MODERN PENTATHLON
 0x1F946 RIFLE
 0x1F984 UNICORN FACE
@@ -240,3 +242,5 @@
 @block(Chess Symbols)
 @block(Symbols and Pictographs Extended-A)
 @block(Symbols for Legacy Computing)
+@block(Kaktovik Numerals)
+
