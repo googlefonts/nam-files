@@ -183,6 +183,12 @@ def SubsetsInFont(file_path, min_pct, ext_min_pct=None):
       A list of 3-tuples of (subset name, #supported, #in subset).
     """
     all_cps = CodepointsInFont(file_path)
+    # Remove control chars and whitespace chars from the font since they may
+    # trigger greek-ext and latin-ext subsets to be enabled.
+    # https://github.com/googlefonts/nam-files/issues/14#issuecomment-2076693612
+    for codepoint in set([0x0000, 0x000D, 0x0020, 0x00A0]):
+        if codepoint in all_cps:
+            all_cps.remove(codepoint)
 
     results = []
     for subset in ListSubsets():
