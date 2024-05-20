@@ -5,9 +5,11 @@ Usage:
     python3 scripts/slice_cpdiff file1.nam file2.
 """
 
+from collections import defaultdict
 from pathlib import Path
 import sys
 from typing import Set
+import unicodeblock.blocks
 
 
 def codepoints(slice_file: Path) -> Set[int]:
@@ -20,7 +22,7 @@ def codepoints(slice_file: Path) -> Set[int]:
             line = line.strip()
             if not line.startswith("codepoints: "):
                 continue
-            codepoints.add(int(line[line.index(" "):]))
+            codepoints.add(int(line[line.index(" ") :]))
     return codepoints
 
 
@@ -33,6 +35,16 @@ def path_to_file(maybe: str) -> Path:
 def list(tag: str, source: str, codepoints: Set[int]):
     for cp in sorted(codepoints):
         print(f"{tag} {source} 0x{cp:04x}")
+
+
+def list_blocks(prefix: str, codepoints: Set[int]):
+    blocks = defaultdict(int)
+    for cp in codepoints:
+        blocks[unicodeblock.blocks.of(chr(cp))] += 1
+    blocks = sorted([(count, block) for (block, count) in blocks.items()], reverse=True)
+    for count, block in blocks:
+        print(f"{prefix}{block} {count}")
+
 
 def main(argv):
     assert len(argv) == 3, "Must have exactly two arguments"
@@ -48,11 +60,13 @@ def main(argv):
 
     list("only", nam1.name, only1)
     list("only", nam2.name, only2)
-    
+
     print()
     print(f"{len(identical)} match")
     print(f"{len(only1)} only in {nam1.name}")
+    list_blocks("  ", only1)
     print(f"{len(only2)} only in {nam2.name}")
+    list_blocks("  ", only2)
 
 
 if __name__ == "__main__":
