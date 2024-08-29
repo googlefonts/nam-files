@@ -1,0 +1,10 @@
+# Boxes and blocks
+@block(Box Drawing)
+@block(Block Elements)
+0x23b8..023bd
+
+# Spaces
+0x2000
+0x2001
+0x2004..0x200A
+-0x2009
