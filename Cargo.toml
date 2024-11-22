@@ -1,4 +1,7 @@
 [package]
+description = "Google Fonts subset definitions"
+repository = "https://github.com/googlefonts/nam-files"
+license-file = "LICENSE"
 name = "google-fonts-subsets"
 version = "0.202411.21"
 edition = "2021"
