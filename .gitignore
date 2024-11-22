@@ -1,0 +1,6 @@
+dist
+Lib/gfsubsets/_version.py
+target/
+__pycache__
+Lib/gfsubsets/__pycache__/s
+*egg-info
