@@ -10,7 +10,7 @@ checksum = "d2fabcfbdc87f4758337ca535fb41a6d701b65693ce38287d856d1674551ec9b"
 
 [[package]]
 name = "google-fonts-subsets"
-version = "0.202505.7"
+version = "0.202511.4"
 dependencies = [
  "glob",
 ]
