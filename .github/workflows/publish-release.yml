@@ -4,6 +4,9 @@ on:
       - "v*" # Push events to matching `v*` version srings. e.g. v1.0, v20.15.10
 
 name: Create and Publish Release
+permissions:
+  contents: write
+  id-token: write
 
 jobs:
   build:
