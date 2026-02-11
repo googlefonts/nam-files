@@ -3,7 +3,7 @@ description = "Google Fonts subset definitions"
 repository = "https://github.com/googlefonts/nam-files"
 license-file = "LICENSE"
 name = "google-fonts-subsets"
-version = "0.202511.4"
+version = "0.202602.1"
 edition = "2021"
 
 [build-dependencies]
