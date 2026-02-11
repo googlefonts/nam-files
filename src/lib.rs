@@ -15,6 +15,12 @@ include!(concat!(env!("OUT_DIR"), "/subsets.rs"));
 
 const CONTROL_CHARS: [u32; 4] = [0x0000, 0x000D, 0x0020, 0x00A0];
 
+/// Determines which subsets are present in a font based on the codepoints it contains.
+///
+/// # Arguments
+/// * `codepoints` - A set of codepoints present in the font.
+/// * `min_pct` - The minimum percentage of codepoints from a subset that must be present for it to be considered included.
+/// * `ext_min_pct` - An optional minimum percentage for subsets that end with "-ext
 pub fn subsets_in_font(
     codepoints: &HashSet<u32>,
     min_pct: f32,
@@ -43,4 +49,17 @@ pub fn subsets_in_font(
         }
     }
     subsets
+}
+
+/// Returns the subsets that a given codepoint belongs to.
+pub fn subsets_for_codepoint(codepoint: u32) -> impl Iterator<Item = &'static str> {
+    SUBSETS
+        .iter()
+        .filter_map(move |(subset, subset_codepoints)| {
+            if subset_codepoints.contains(&codepoint) {
+                Some(*subset)
+            } else {
+                None
+            }
+        })
 }
