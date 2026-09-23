@@ -20,7 +20,8 @@ authors = [
     {name = 'Roderick Sheeter', email = "rsheeter@google.com" }
 ]
 dependencies = [
-    "importlib_resources"  # Backport for Python < 3.9
+    "importlib_resources",  # Backport for Python < 3.9
+    "shaperglot",  # For language detection
 ]
 
 [project.optional-dependencies]

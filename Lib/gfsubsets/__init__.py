@@ -2,17 +2,20 @@
 
 Provides APIs to interact with font subsets, codepoints for font or subset.
 """
-import codecs
-import contextlib
+
 import re
-import sys
 import warnings
+
 # importlib.resources.files only available since Python>3.9,
 # temporarily use backport
 from importlib_resources import files
-from fontTools import ttLib
 
 from . import subsets
+from .font import (
+    CodepointsInFont,
+    UnicodeCmapTables as UnicodeCmapTables,
+    SubsetsInFont as SubsetsInFont,
+)
 
 nam_files = files("gfsubsets.data")
 
@@ -50,44 +53,6 @@ subset_codepoints = NamFileDict()
 # >>> _NAMELIST_CODEPOINT_REGEX.match('1234A').groups()[0]
 # '1234A'
 _NAMELIST_CODEPOINT_REGEX = re.compile("^([A-F0-9]{4,5})")
-
-_PLATFORM_ID_MICROSOFT = 3
-_PLATFORM_ENC_UNICODE_BMP = 1
-_PLATFORM_ENC_UNICODE_UCS4 = 10
-_PLATFORM_ENCS_UNICODE = (_PLATFORM_ENC_UNICODE_BMP, _PLATFORM_ENC_UNICODE_UCS4)
-
-
-def UnicodeCmapTables(font):
-    """Find unicode cmap tables in font.
-
-    Args:
-      font: A TTFont.
-    Yields:
-      cmap tables that contain unicode mappings
-    """
-    for table in font["cmap"].tables:
-        if (
-            table.platformID == _PLATFORM_ID_MICROSOFT
-            and table.platEncID in _PLATFORM_ENCS_UNICODE
-        ):
-            yield table
-
-
-def CodepointsInFont(font_filename):
-    """Returns the set of codepoints present in the font file specified.
-
-    Args:
-      font_filename: The name of a font file.
-    Returns:
-      A set of integers, each representing a codepoint present in font.
-    """
-
-    font_cps = set()
-    with contextlib.closing(ttLib.TTFont(font_filename)) as font:
-        for t in UnicodeCmapTables(font):
-            font_cps.update(t.cmap.keys())
-
-    return font_cps
 
 
 def ListSubsets():
@@ -169,7 +134,7 @@ def CodepointsInSubset(subset, unique_glyphs=False):
     return cps
 
 
-def SubsetsInFont(file_path, min_pct, ext_min_pct=None):
+def SubsetsInFont_old(file_path, min_pct, ext_min_pct=None):
     """Finds all subsets for which we support > min_pct of codepoints.
 
     Args:
